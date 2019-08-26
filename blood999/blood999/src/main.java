@@ -11,29 +11,34 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 public class main extends JFrame implements ActionListener, Broadcast {
-
-	ServerSocket serverSock;// 連線
-	private int judge_pos_neg=1;// 判斷正負 用在+10-10
-	private int judge_ten_or_twenty=10;// 判斷10或20
-	private static ArrayList cardbase = new ArrayList();// 牌庫
+//南無觀世音菩薩
+	//南無觀世音菩薩
+	//南無觀世音菩薩
+	//南無觀世音菩薩
+	//南無觀世音菩薩
+	//南無觀世音菩薩
+	ServerSocket serverSock;// ��蝺�
+	private int judge_pos_neg=1;// ��甇�鞎� ��+10-10
+	private int judge_ten_or_twenty=10;// ��10���20
+	private static ArrayList cardbase = new ArrayList();// ��澈
 	private String abc;
-	private int judge_times_of_card4 = 1;// 看迴轉用幾次
-	private int judge_whether_use_card5 = 0;// 看有沒有用指定
-	private int judge_player = 1;// 判斷換誰出牌
-	private int counts_cards = 5;// 發牌用ㄉ 拿完手牌的
-//	private static String card_01;// BUTTON上的字 初始手牌
+	private int judge_times_of_card4 = 1;// ��艘頧撟暹活
+	private int judge_whether_use_card5 = 0;// ���������
+	private int judge_player = 1;// ����狐����
+	private int counts_cards = 5;// ������ �摰����
+//	private static String card_01;// BUTTON銝��� ������
 //	private static String card_02;
 //	private static String card_03;
 //	private static String card_04;
 //	private static String card_05;
-	private int total_number_int=0; // ��憿舐內�閮��
-	private String total_number_str = "00";// 憿舐內�
-	private JLabel show_number; // 顯示現在數字多少(上面的總數
-	private JLabel show_function; // 顯示用了哪些功能牌(下面的
-	private JLabel show_player; // 顯示換誰
+	private int total_number_int=0; // 嚙踐�蕭謓剜��嚙踐���蕭嚙�
+	private String total_number_str = "00";// ���嚙踐��
+	private JLabel show_number; // 憿舐內���摮���(銝��蜇�
+	private JLabel show_function; // 憿舐內�鈭鈭����(銝���
+	private JLabel show_player; // 憿舐內��狐
 	private int judge_player_when_use5 = 1;// check 5
 	private JButton bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt10;
-	private String show_leftword = "開始";
+	private String show_leftword = "����";
 	private static ArrayList win_or_lose = new ArrayList();
 	ArrayList<Socket> clientDatas = new ArrayList<>();
 
@@ -42,25 +47,25 @@ public class main extends JFrame implements ActionListener, Broadcast {
 	}
 
 	public main() {
-		//輸贏
+		//頛貉��
 		win_or_lose.add(null);
 		win_or_lose.add(null);
 		win_or_lose.add(null);
-		// frame相關參數
+		// frame����
 		setSize(250, 150);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
-		// 顯示總數
+		// 憿舐內蝮賣
 		show_number = new JLabel("");
 		show_number.setSize(200, 200);
 		show_number.setLocation(0, 0);
 		show_number.setFont(new java.awt.Font("Dialog", 1, 100));
-		// 顯示功能
+		// 憿舐內��
 		show_function = new JLabel("READY!");
 		show_function.setSize(200, 100);
 		show_function.setLocation(0, 0);
 		show_function.setFont(new java.awt.Font("Dialog", 1, 30));
-		// 顯示換誰
+		// 憿舐內��狐
 		show_player = new JLabel("");
 		show_player.setSize(200, 200);
 		show_player.setLocation(0, 0);
@@ -70,7 +75,7 @@ public class main extends JFrame implements ActionListener, Broadcast {
 		this.add(show_player);
 		this.add(show_function);
 	
-		setTitle("Player1");// 改名字
+		setTitle("Player1");// �����
 		setVisible(true);
 		setResizable(false);
 		try {
@@ -149,7 +154,7 @@ public class main extends JFrame implements ActionListener, Broadcast {
 
 	}
 
-	// 看換誰
+	// ���狐
 	public void function_show_player() {
 		function_player_lose_and_skip();
 		function_check_card5();
@@ -165,32 +170,32 @@ public class main extends JFrame implements ActionListener, Broadcast {
 		System.out.println(judge_player);
 		System.out.println(win_or_lose);
 		function_check_winner();
-		show_player.setText("換Player" + judge_player);
+		show_player.setText("��layer" + judge_player);
 
 	}
 
-	// 看有沒有用過5
+	// ��������5
 	public void function_check_card5() {
-		if (judge_whether_use_card5 == 0) {// 沒有用指定
+		if (judge_whether_use_card5 == 0) {// 瘝�����
 			function_check_card4();
-		} else if (judge_whether_use_card5 % 2 == 1) {// 有用指定
+		} else if (judge_whether_use_card5 % 2 == 1) {// ������
 			judge_whether_use_card5--;
 			judge_player = judge_player_when_use5;
 
 		}
 	}
 
-	// 看有沒有用過4
+	// ��������4
 	public void function_check_card4() {
-		if (judge_times_of_card4 % 2 == 1) {// 用了偶數次迴轉
-			judge_player++;// 換下一個人
-		} else if (judge_times_of_card4 % 2 == 0) {// 用了奇數次迴轉
-			judge_player--;// 換上一個人
+		if (judge_times_of_card4 % 2 == 1) {// �鈭�甈∟艘頧�
+			judge_player++;// �����犖
+		} else if (judge_times_of_card4 % 2 == 0) {// �鈭�甈∟艘頧�
+			judge_player--;// �����犖
 		}
 
 	}
 
-	// 檢查有沒有超過99
+	// 瑼Ｘ�������99
 	public void function_check() {
 		if (Integer.valueOf(show_number.getText()) > 99) {
 
@@ -205,13 +210,13 @@ public class main extends JFrame implements ActionListener, Broadcast {
 		}
 	}
 
-	// 判別出的牌是哪一張
+	// �������銝�撘�
 	public void function_A() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 1;
 		show_function.setText("+1");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+1";
 		function_check();
 		function_show_player();
@@ -219,11 +224,11 @@ public class main extends JFrame implements ActionListener, Broadcast {
 	}
 
 	public void function_2() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 2;
 		show_function.setText("+2");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+2";
 		function_check();
 		function_show_player();
@@ -231,11 +236,11 @@ public class main extends JFrame implements ActionListener, Broadcast {
 	}
 
 	public void function_3() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 3;
 		show_function.setText("+3");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+3";
 		function_check();
 		function_show_player();
@@ -243,61 +248,61 @@ public class main extends JFrame implements ActionListener, Broadcast {
 	}
 
 	public void function_4() {
-		show_function.setText("迴轉!");// 印在顯示器上
+		show_function.setText("餈渲��!");// ��憿舐內�銝�
 		judge_times_of_card4++;
-		show_leftword = "迴轉!";
+		show_leftword = "餈渲��!";
 		function_check();
 		function_show_player();
 
 	}
 
 	public void function_5() {
-		show_function.setText("指定");
+		show_function.setText("����");
 		judge_whether_use_card5++;
-		show_leftword = "指定";
+		show_leftword = "����";
 		function_check();
 
 	}
 
 	public void function_6() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 6;
 		show_function.setText("+6");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+6";
 		function_check();
 		function_show_player();
 	}
 
 	public void function_7() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 7;
 		show_function.setText("+7");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+7";
 		function_check();
 		function_show_player();
 	}
 
 	public void function_8() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 8;
 		show_function.setText("+8");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+8";
 		function_check();
 		function_show_player();
 	}
 
 	public void function_9() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += 9;
 		show_function.setText("+9");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+9";
 		function_check();
 		function_show_player();
@@ -325,24 +330,24 @@ public class main extends JFrame implements ActionListener, Broadcast {
 	}
 
 	public void function_K() {
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int = 99;
-		show_function.setText("玖拾玖");
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
-		show_leftword = "玖拾玖";
+		show_function.setText("�����");
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
+		show_leftword = "�����";
 		function_check();
 		function_show_player();
 
 	}
 
-	// 判別用加十還是減十
+	// �������皜��
 	public void function_positive() {
 		judge_pos_neg = 1;
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += judge_ten_or_twenty * judge_pos_neg;
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "+" + judge_ten_or_twenty;
 		function_check();
 		function_show_player();
@@ -350,16 +355,16 @@ public class main extends JFrame implements ActionListener, Broadcast {
 
 	public void function_negetive() {
 		judge_pos_neg = -1;
-		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = Integer.valueOf(total_number_str); // ��＊蝷箇�摮��������
 		total_number_int += judge_ten_or_twenty * judge_pos_neg;
-		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
-		show_number.setText(total_number_str);// 印在顯示器上
+		total_number_str = String.valueOf(total_number_int);// ���摮���葡
+		show_number.setText(total_number_str);// ��憿舐內�銝�
 		show_leftword = "-" + judge_ten_or_twenty;
 		function_check();
 		function_show_player();
 	}
 
-	// 判斷出的牌是什麼
+	// ������隞�暻�
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("1")) {
 			function_A();
@@ -415,7 +420,7 @@ public class main extends JFrame implements ActionListener, Broadcast {
 		public Chat(Socket socket, Broadcast broadcast) {
 			this.socket = socket;
 			this.broadcast = broadcast;
-		}// ip位址
+		}// ip雿�
 
 		public void run() {
 			try {
@@ -471,7 +476,7 @@ public class main extends JFrame implements ActionListener, Broadcast {
 						function_show_player();
 					}
 
-					// 出牌後要抽牌
+					// ��������
 					if ((clientText.equals(bt1))) {
 						bt1.setText(String.valueOf(cardbase.get(counts_cards)));
 						counts_cards++;
