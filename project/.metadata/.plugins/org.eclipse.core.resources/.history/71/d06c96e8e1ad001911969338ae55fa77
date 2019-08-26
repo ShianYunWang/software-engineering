@@ -1,0 +1,26 @@
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class Client {
+
+	public static void main(String[] args) {
+		Socket connectionSock;// ³s½u
+		PrintStream serverOutput;
+		try {
+			connectionSock = new Socket("127.0.0.1", 8000);
+			serverOutput = new PrintStream(connectionSock.getOutputStream(), true);
+			while(true) {
+				Scanner scanner = new Scanner(System.in);
+				serverOutput.println();
+			}
+//			serverOutput.writeBytes("1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}

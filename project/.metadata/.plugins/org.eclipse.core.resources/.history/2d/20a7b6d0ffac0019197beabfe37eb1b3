@@ -1,0 +1,84 @@
+package blood_99;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class main2 {
+	static int toatal = 0;
+	public static void main(String[] args) {
+		try {
+			ServerSocket serverSock = new ServerSocket(8000);
+			System.out.print("Server started...");
+			while (true) {
+				Socket cSock = serverSock.accept();
+				Chat chat = new Chat(cSock);
+				Thread chatthread = new Thread(chat);
+				chatthread.start();
+			}
+		} catch (IOException e) {
+			System.out.println("disconnected...");
+		}
+	}
+}
+
+class Chat implements Runnable {
+	private Socket socket;
+
+	public Chat(Socket socket) {
+		this.socket = socket;
+	}
+
+	public void run() {
+		try {
+			
+			BufferedReader clientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			while (true) {
+				String clientText = clientInput.readLine();
+				System.out.println("From Client: " + clientText);
+
+				switch (clientText) {
+				case "1":
+					main.toatal = main.toatal + 1;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				case "2":
+					main.toatal = main.toatal + 2;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				case "3":
+					main.toatal = main.toatal + 3;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				case "4":
+					main.toatal = main.toatal + 4;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				case "5":
+					main.toatal = main.toatal + 5;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				case "6":
+					main.toatal =main.toatal + 6;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				case "7":
+					main.toatal = main.toatal + 7;
+					System.out.println("toatal:" + main.toatal);
+					break;
+				default:
+					System.out.println("­«·s¿é¤J");
+				}
+
+				if (clientText.equals("bye"))
+					break;
+			}
+			clientInput.close();
+			socket.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

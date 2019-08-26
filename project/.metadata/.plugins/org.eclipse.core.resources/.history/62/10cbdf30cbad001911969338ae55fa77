@@ -1,0 +1,32 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class ServerThread extends Thread{
+	private Socket socket;
+	Broadcast broadcast;
+
+	public ServerThread(Socket socket, ArrayList<ServerThread> cliendDatas, Broadcast broadcast) {
+		this.socket = socket;
+		this.broadcast = broadcast;
+	}
+	
+	public void run() {
+		while(true) {
+			try {
+				BufferedReader waitClientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				BufferedReader receiveBroadcastMsg = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				
+				String waitClientText = waitClientInput.readLine();
+				broadcast.sendAllMsg(waitClientText);
+				String waitBroadcastMsg = receiveBroadcastMsg
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+		}
+		
+	}
+}

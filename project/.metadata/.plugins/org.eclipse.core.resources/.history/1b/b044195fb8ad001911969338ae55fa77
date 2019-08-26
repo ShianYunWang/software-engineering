@@ -1,0 +1,364 @@
+package blood_99;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+public class blood99 extends JFrame implements ActionListener {
+	private int judge_pos_neg;
+	private int total_number_int;
+	private String total_number_str = "0";
+	private JLabel show_number; // 顯示現在數字多少
+	private JLabel show_function; // 顯示用了哪些功能牌
+	private JPanel panel_down;
+	ServerSocket serverSock;
+	public static void main(String[] args) {
+		blood99 frame = new blood99();
+	}
+
+	public blood99() {
+
+		setSize(800, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(null);
+		show_number = new JLabel(total_number_str);
+		show_number.setSize(200, 200);
+		show_number.setLocation(350, 0);
+		show_number.setFont(new java.awt.Font("Dialog", 1, 100));
+
+		show_function = new JLabel("鄭晴立");
+		show_function.setSize(200, 200);
+		show_function.setLocation(350, 200);
+		show_function.setFont(new java.awt.Font("Dialog", 1, 30));
+
+		// 下面的按鈕
+		panel_down = new JPanel();
+		panel_down.setSize(400, 400);
+		panel_down.setLocation(200, 400);
+
+		// Add ActionListener with {YOURBUTTONNAME}.addActionListener(this)
+
+		this.add(panel_down);
+		this.add(show_number);
+		this.add(show_function);
+
+		setTitle("Player1");// 改名字
+		setVisible(true);
+		setResizable(false);
+		try {
+			ServerSocket serverSock = new ServerSocket(8000);
+			System.out.print("Server started...");
+			while (true) {
+				Socket cSock = serverSock.accept();
+				Chat chat = new Chat(cSock);
+				Thread chatthread = new Thread(chat);
+//				System.out.println("connect");
+				chatthread.start();
+			}
+		} catch (IOException e) {
+			System.out.println("disconnected...");
+		}
+
+	}
+
+	public void function_A() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 1;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_2() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 2;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_3() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 3;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_4() {
+		show_function.setText("迴轉");// 印在顯示器上
+	}
+
+	public void function_5() {
+		show_function.setText("指定");
+	}
+
+	public void function_6() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 6;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_7() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 7;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_8() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 8;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_9() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 9;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_10() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 10 * judge_pos_neg;
+		show_function.setText("加十或減十");
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+
+	}
+
+	public void function_J() {
+		show_function.setText("PASS");
+	}
+
+	public void function_Q() {
+
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int += 20 * judge_pos_neg;
+		show_function.setText("加20或減20");
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_K() {
+		total_number_int = Integer.valueOf(total_number_str); // 把顯示的數字轉成整數做計算
+		total_number_int = 99;
+		total_number_str = String.valueOf(total_number_int);// 再把數字轉成字串
+		show_number.setText(total_number_str);// 印在顯示器上
+	}
+
+	public void function_positive() {
+		judge_pos_neg = 1;
+	}
+
+	public void function_negetive() {
+		judge_pos_neg = -1;
+	}
+
+	// 判斷出的牌是什麼
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("A")) {
+			function_A();
+		} else if (e.getActionCommand().equals("2")) {
+			function_2();
+		} else if (e.getActionCommand().equals("3")) {
+			function_3();
+		} else if (e.getActionCommand().equals("4")) {
+			function_4();
+		} else if (e.getActionCommand().equals("5")) {
+			function_5();
+		} else if (e.getActionCommand().equals("6")) {
+			function_6();
+		} else if (e.getActionCommand().equals("7")) {
+			function_7();
+		} else if (e.getActionCommand().equals("8")) {
+			function_8();
+		} else if (e.getActionCommand().equals("9")) {
+			function_9();
+		} else if (e.getActionCommand().equals("10")) {
+			function_10();
+		} else if (e.getActionCommand().equals("J")) {
+			function_J();
+		} else if (e.getActionCommand().equals("Q")) {
+			function_Q();
+		} else if (e.getActionCommand().equals("K")) {
+			function_K();
+		} else if (e.getActionCommand().equals("+")) {
+			function_positive();
+		} else if (e.getActionCommand().equals("-")) {
+			function_negetive();
+		}
+
+		// implement button listener
+	}
+
+	class Chat implements Runnable {
+		private Socket socket;
+
+		public Chat(Socket socket) {
+			this.socket = socket;
+		}// ip位址
+		public void function_A() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=1;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_2() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=2;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_3() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=3;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_4() {
+			show_function.setText("迴轉");//印在顯示器上
+		}
+		public void function_5() {
+			show_function.setText("指定");
+		}
+		public void function_6() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=6;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_7() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=7;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_8() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=8;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_9() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=9;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_10() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=10*judge_pos_neg;
+			show_function.setText("加十或減十");
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+			
+		}
+		public void function_J() {
+			show_function.setText("PASS");
+		}
+		public void function_Q() {
+			
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int+=20*judge_pos_neg;
+			show_function.setText("加20或減20");
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_K() {
+			total_number_int = Integer.valueOf(total_number_str); //把顯示的數字轉成整數做計算
+			total_number_int=99;
+			total_number_str= String.valueOf(total_number_int);//再把數字轉成字串
+			show_number.setText(total_number_str);//印在顯示器上
+		}
+		public void function_positive() {
+			judge_pos_neg=1;
+		}
+		public void function_negetive() {
+			judge_pos_neg=-1;
+		}
+		public void run() {
+			try {
+
+				BufferedReader clientInput = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//					System.out.println("wtf");
+				while (true) {
+					String clientText = clientInput.readLine();
+					System.out.println("From Client: " + clientText);
+					System.out.print(clientText);		
+					if ( clientText.equals("1")){
+						function_A();
+					}
+					else if (  clientText.equals("2")){
+						function_2();
+					}
+					else if (  clientText.equals("3")){
+						
+						function_3();
+					}
+					else if (  clientText.equals("4")){
+						
+						function_4();
+					}
+					else if (  clientText.equals("5")){
+						
+						function_5();
+					}
+					else if (  clientText.equals("6")){
+						function_6();
+					}
+					else if (  clientText.equals("7")){
+						function_7();
+					}
+					else if (  clientText.equals("8")){
+						function_8();
+					}
+					else if (  clientText.equals("9")){
+						function_9();
+					}
+					else if (  clientText.equals("10")){
+						function_10();
+					}
+					else if (  clientText.equals("11")){
+						function_J();
+					}
+					else if (  clientText.equals("12")){
+						function_Q();
+					}
+					else if (  clientText.equals("13")){
+						function_K();
+					}
+					else if (  clientText.equals("+")){
+						function_positive();
+					}
+					else if (  clientText.equals("-")){
+						function_negetive();
+					}
+				
+					
+				// implement button listener
+			}
+	//
+//					if (clientText.equals("bye"))
+//						break;
+//				}
+
+				
+//					System.out.println("wtf2");
+//				clientInput.close();
+//					socket.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}}}
+	
+

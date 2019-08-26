@@ -1,0 +1,462 @@
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class player2 extends JFrame implements ActionListener {
+	// 牌庫
+	private static ArrayList cardbase = new ArrayList();
+	private int counts_cards = 5;// 5 張手牌
+	// bottom 上的5 張手牌
+	private static String card_01;
+	private static String card_02;
+	private static String card_03;
+	private static String card_04;
+	private static String card_05;
+	private JButton bt1, bt2, bt3, bt4, bt5, bt6, bt7, bt8, bt9, bt10;
+	JLabel show_number;
+	private int judge_player = 1;// 判斷換誰出牌
+	private int judge_ten_or_twenty;// 判斷10或20
+	Socket connectionSock;// 連線
+	DataOutputStream serverOutput;// 連線
+	private JLabel show_function; // 顯示用了哪些功能牌(下面的
+	private JLabel show_player; // 顯示換誰
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		/////////////////////////// 發牌洗牌用(以下)
+		Final pk = new Final();
+		pk.createCard();
+		for (int i = 0; i < 13; i++) {
+			for (int j = 0; j < 4; j++) {
+				pk.createdetail(i, j);
+			}
+		}
+		// pk.printdetail();
+		for (int k = 0; k < 52; k++) {
+			cardbase.add(pk.cardList().get(k));
+		}
+
+		System.out.println(pk.cardList());
+		System.out.println(cardbase);
+		System.out.println(cardbase.get(0));
+		card_01 = (String) cardbase.get(0);
+		card_02 = (String) cardbase.get(1);
+		card_03 = (String) cardbase.get(2);
+		card_04 = (String) cardbase.get(3);
+		card_05 = (String) cardbase.get(4);
+		// 建立FRAME
+		player2 frame = new player2();
+		frame.setTitle("Player1");// 改名字
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.test();
+	}
+
+	public player2() {
+//連線
+		try {
+			connectionSock = new Socket("127.0.0.1", 8000);
+			serverOutput = new DataOutputStream(connectionSock.getOutputStream());
+//			serverOutput.writeBytes("1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// frame相關參數
+		setSize(800, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(null);
+		// 顯示功能
+		show_function = new JLabel("開始!");
+		show_function.setSize(200, 200);
+		show_function.setLocation(200, 200);
+		show_function.setFont(new java.awt.Font("Dialog", 1, 30));
+		// 顯示換誰
+		show_player = new JLabel("換Player" + judge_player);
+		show_player.setSize(200, 200);
+		show_player.setLocation(500, 200);
+		show_player.setFont(new java.awt.Font("Dialog", 1, 30));
+		//顯示總數
+		show_number = new JLabel("0");
+		show_number.setBounds(0, 0, 80, 120);
+		show_number.setSize(200, 200);
+		show_number.setLocation(350, 0);
+		show_number.setFont(new java.awt.Font("Dialog", 1, 100));
+//		ReceiveMsg receiveMsg = new ReceiveMsg(jlabel, connectionSock);
+
+//		System.out.println("wtfwtf2");
+		// 設置按鈕
+		// 五張撲克牌
+		// 五張撲克牌
+		bt1 = new JButton(card_01);
+		bt2 = new JButton(card_02);
+		bt3 = new JButton(card_03);
+		bt4 = new JButton(card_04);
+		bt5 = new JButton(card_05);
+		bt1.setBounds(50, 430, 80, 120);
+		bt2.setBounds(150, 430, 80, 120);
+		bt3.setBounds(250, 430, 80, 120);
+		bt4.setBounds(350, 430, 80, 120);
+		bt5.setBounds(450, 430, 80, 120);
+		// 判斷+10or-10
+		bt6 = new JButton("+");
+		bt7 = new JButton("-");
+		bt6.setBounds(565, 430, 50, 50);
+		bt7.setBounds(565, 500, 50, 50);
+		bt8 = new JButton("P1");
+		bt9 = new JButton("P2");
+		bt10 = new JButton("P3");
+		bt8.setBounds(650, 430, 50, 30);
+		bt9.setBounds(650, 470, 50, 30);
+		bt10.setBounds(650, 510, 50, 30);
+
+		bt1.addActionListener(this);
+		bt2.addActionListener(this);
+		bt3.addActionListener(this);
+		bt4.addActionListener(this);
+		bt5.addActionListener(this);
+		bt6.addActionListener(this);
+		bt7.addActionListener(this);
+		bt8.addActionListener(this);
+		bt9.addActionListener(this);
+		bt10.addActionListener(this);
+		// 把東西加到frame裡面
+		// 把東西加到frame裡面
+		this.add(bt1);
+		this.add(bt2);
+		this.add(bt3);
+		this.add(bt4);
+		this.add(bt5);
+		this.add(bt6);
+		this.add(bt7);
+		this.add(bt8);
+		this.add(bt9);
+		this.add(bt10);
+		this.add(show_number);
+		this.add(show_player);
+		this.add(show_function);
+
+	}
+
+	public void test() {
+		new Thread(new ReceiveMsg(show_number, connectionSock)).run();
+	}
+
+	public void function_A() {
+		try {
+			serverOutput.writeBytes("1\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_2() {
+		try {
+			serverOutput.writeBytes("2\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_3() {
+		try {
+			serverOutput.writeBytes("3\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_4() {
+		try {
+			serverOutput.writeBytes("4\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_5() {
+		try {
+			serverOutput.writeBytes("5\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_6() {
+		try {
+			serverOutput.writeBytes("6\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_7() {
+		try {
+			serverOutput.writeBytes("7\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_8() {
+		try {
+			serverOutput.writeBytes("8\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_9() {
+		try {
+			serverOutput.writeBytes("9\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_10() {
+		try {
+			serverOutput.writeBytes("10\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_J() {
+		try {
+			serverOutput.writeBytes("11\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_Q() {
+		try {
+			serverOutput.writeBytes("12\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_K() {
+		try {
+			serverOutput.writeBytes("13\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_positive() {
+		try {
+			serverOutput.writeBytes("+\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_negetive() {
+		try {
+			serverOutput.writeBytes("-\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_p1() {
+		try {
+			serverOutput.writeBytes("P1\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_p2() {
+		try {
+			serverOutput.writeBytes("P2\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_p3() {
+		try {
+			serverOutput.writeBytes("P3\n");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// 判斷出的牌是什麼
+	public void actionPerformed(ActionEvent e) {
+		if ((e.getActionCommand().equals("梅花1")) || (e.getActionCommand().equals("方塊A"))
+				|| (e.getActionCommand().equals("紅心1")) || (e.getActionCommand().equals("黑桃A"))) {
+			function_A();
+		} else if ((e.getActionCommand().equals("梅花2")) || (e.getActionCommand().equals("方塊2"))
+				|| (e.getActionCommand().equals("紅心2")) || (e.getActionCommand().equals("黑桃2"))) {
+			function_2();
+		} else if ((e.getActionCommand().equals("梅花3")) || (e.getActionCommand().equals("方塊3"))
+				|| (e.getActionCommand().equals("紅心3")) || (e.getActionCommand().equals("黑桃3"))) {
+			function_3();
+		} else if ((e.getActionCommand().equals("梅花4")) || (e.getActionCommand().equals("方塊4"))
+				|| (e.getActionCommand().equals("紅心4")) || (e.getActionCommand().equals("黑桃4"))) {
+			function_4();
+		} else if ((e.getActionCommand().equals("梅花5")) || (e.getActionCommand().equals("方塊5"))
+				|| (e.getActionCommand().equals("紅心5")) || (e.getActionCommand().equals("黑桃5"))) {
+			function_5();
+		} else if ((e.getActionCommand().equals("梅花6")) || (e.getActionCommand().equals("方塊6"))
+				|| (e.getActionCommand().equals("紅心6")) || (e.getActionCommand().equals("黑桃6"))) {
+			function_6();
+		} else if ((e.getActionCommand().equals("梅花7")) || (e.getActionCommand().equals("方塊7"))
+				|| (e.getActionCommand().equals("紅心7")) || (e.getActionCommand().equals("黑桃7"))) {
+			function_7();
+		} else if ((e.getActionCommand().equals("梅花8")) || (e.getActionCommand().equals("方塊8"))
+				|| (e.getActionCommand().equals("紅心8")) || (e.getActionCommand().equals("黑桃8"))) {
+			function_8();
+		} else if ((e.getActionCommand().equals("梅花9")) || (e.getActionCommand().equals("方塊9"))
+				|| (e.getActionCommand().equals("紅心9")) || (e.getActionCommand().equals("黑桃9"))) {
+			function_9();
+		} else if ((e.getActionCommand().equals("梅花10")) || (e.getActionCommand().equals("方塊10"))
+				|| (e.getActionCommand().equals("紅心10")) || (e.getActionCommand().equals("黑桃10"))) {
+			function_10();
+		} else if ((e.getActionCommand().equals("梅花11")) || (e.getActionCommand().equals("方塊J"))
+				|| (e.getActionCommand().equals("紅心11")) || (e.getActionCommand().equals("黑桃J"))) {
+			function_J();
+		} else if ((e.getActionCommand().equals("梅花12")) || (e.getActionCommand().equals("方塊Q"))
+				|| (e.getActionCommand().equals("紅心12")) || (e.getActionCommand().equals("黑桃Q"))) {
+			function_Q();
+		} else if ((e.getActionCommand().equals("梅花13")) || (e.getActionCommand().equals("方塊K"))
+				|| (e.getActionCommand().equals("紅心13")) || (e.getActionCommand().equals("黑桃K"))) {
+			function_K();
+		} else if (e.getActionCommand().equals("+")) {
+			function_positive();
+		} else if (e.getActionCommand().equals("-")) {
+			function_negetive();
+		} else if (e.getActionCommand().equals("P1")) {
+			function_p1();
+		} else if (e.getActionCommand().equals("P2")) {
+			function_p2();
+		} else if (e.getActionCommand().equals("P3")) {
+			function_p3();
+		}
+		if ((e.getSource().equals(bt1))) {
+			bt1.setText(String.valueOf(cardbase.get(counts_cards)));
+			counts_cards++;
+		} else if ((e.getSource().equals(bt2))) {
+			bt2.setText(String.valueOf(cardbase.get(counts_cards)));
+			counts_cards++;
+		} else if ((e.getSource().equals(bt3))) {
+			bt3.setText(String.valueOf(cardbase.get(counts_cards)));
+			counts_cards++;
+		} else if ((e.getSource().equals(bt4))) {
+			bt4.setText(String.valueOf(cardbase.get(counts_cards)));
+			counts_cards++;
+		} else if ((e.getSource().equals(bt5))) {
+			bt5.setText(String.valueOf(cardbase.get(counts_cards)));
+			counts_cards++;
+		}
+		// implement button listener
+	}
+
+}
+
+class ReceiveMsg extends Thread {
+	JLabel jlabel;
+	BufferedReader receiveBroadcastMsg;
+
+	public ReceiveMsg(JLabel jlabel, Socket connectionSock) {
+		this.jlabel = jlabel;
+		try {
+			this.receiveBroadcastMsg = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void run() {
+		String waitBroadcastMsg;
+		while (true) {
+			try {
+
+				waitBroadcastMsg = receiveBroadcastMsg.readLine();
+				System.out.println("wtfwtf");
+				jlabel.setText(waitBroadcastMsg);//顯示收到的訊息在jlabel
+				//jlabel.setText(waitBroadcastMsg);
+				System.out.println(waitBroadcastMsg);
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+public void run2() {
+	String waitBroadcastMsg;
+	while (true) {
+		try {
+
+			waitBroadcastMsg = receiveBroadcastMsg.readLine();
+			System.out.println("wtfwtf");
+			jlabel.setText(waitBroadcastMsg);//顯示收到的訊息在jlabel
+			//jlabel.setText(waitBroadcastMsg);
+			System.out.println(waitBroadcastMsg);
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+}
+}
+
+

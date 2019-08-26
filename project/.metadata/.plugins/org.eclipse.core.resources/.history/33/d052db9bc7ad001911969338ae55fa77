@@ -1,0 +1,12 @@
+import java.net.Socket;
+
+public class ServerThread extends Thread{
+	private Socket socket;
+
+	public Chat(Socket socket) {
+		this.socket = socket;
+	}// ip¦ì§}
+	public void run() {
+		
+	}
+}

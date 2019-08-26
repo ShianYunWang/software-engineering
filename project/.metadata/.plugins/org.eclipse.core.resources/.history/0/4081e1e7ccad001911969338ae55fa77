@@ -1,0 +1,45 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+
+public class TCPServer{
+	
+	public static void main(String[] args) {
+		ServerClass server = new ServerClass();
+		server.start();
+	}
+}
+class ServerClass implements Broadcast {
+	ArrayList clientDatas = new ArrayList<Socket>();
+	public ServerClass() {
+		
+	}
+	public void start () {
+		try {
+			ServerSocket serverSock = new ServerSocket(8000);
+			System.out.print("Server started...");
+			while (true) {
+				Socket cSock = serverSock.accept();
+				clientDatas.add(cSock);
+				new Thread(new ServerThread(cSock, clientDatas, this)).start();
+				System.out.println("connecting");
+			}
+		} catch (IOException e) {
+			System.out.println("disconnected...");
+		}
+	}
+	
+	@Override
+	public void sendAllMsg(String msg) {
+		for(int i =0;i < clientDatas.size();i++) {
+			PrintStream writer = PrintStream((Socket)clientDatas.get(i)).getOutputStream(), true, "UTF-8");
+			
+		}
+		
+	}
+	private Object PrintStream(Socket socket) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

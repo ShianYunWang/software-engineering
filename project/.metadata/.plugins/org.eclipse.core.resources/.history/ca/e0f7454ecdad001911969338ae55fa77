@@ -1,0 +1,9 @@
+import java.net.Socket;
+
+public class ClientData {
+	Socket socket;
+	
+	public ClientData(Socket socket) {
+		
+	}
+}

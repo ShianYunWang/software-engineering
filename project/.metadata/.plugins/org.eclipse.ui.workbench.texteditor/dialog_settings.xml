@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="function_show_player"/>
+		<item key="wrap" value="false"/>
+		<item key="casesensitive" value="false"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="function_show_player"/>
+			<item value="judge_player"/>
+			<item value="換player"/>
+			<item value="player"/>
+			<item value="layer&quot;"/>
+			<item value="換Player"/>
+			<item value="win_or_lose"/>
+			<item value="win_or_lose.add"/>
+			<item value="function_player_lose_and_skip"/>
+			<item value="function_check_winner();"/>
+			<item value="show_player"/>
+			<item value="function_check_winne"/>
+			<item value="public void function_player_lose_and_skip() {"/>
+			<item value="player_lose_and_skip"/>
+			<item value="public void function_show_player() {"/>
+		</list>
+		<list key="replacehistory">
+			<item value="System.out.println(&quot;iambig&quot;+show_leftword+&quot;wtf&quot;);"/>
+			<item value="System.out.println(&quot;iambig&quot;+show_number+&quot;wtf&quot;);"/>
+			<item value="System.out.println(show_number);"/>
+			<item value="show_leftword="/>
+			<item value="show_leftword=("/>
+			<item value="show_leftword"/>
+			<item value="&quot;toatal:&quot; + main.toatal"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1325"/>
+		<item key="DIALOG_Y_ORIGIN" value="468"/>
+		<item key="DIALOG_WIDTH" value="521"/>
+		<item key="DIALOG_HEIGHT" value="424"/>
+		<item key="DIALOG_FONT_NAME" value="1|Microsoft JhengHei UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Microsoft JhengHei UI"/>
+	</section>
+</section>

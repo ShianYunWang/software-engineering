@@ -1,0 +1,4 @@
+
+public interface Broadcast2 {
+	public void sendAllMsg2(String msg);
+}

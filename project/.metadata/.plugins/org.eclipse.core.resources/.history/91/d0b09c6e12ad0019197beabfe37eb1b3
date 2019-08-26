@@ -1,0 +1,288 @@
+package blood_99;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class blood99 extends JFrame implements ActionListener {
+	private int total_number_int;
+	private String total_number_str = "0";
+	private JLabel show_number; // 顯示現在數字多少
+	private JLabel function; // 顯示用了哪些功能牌
+	private JButton bt1, bt2, bt3, bt4, bt5; // 放在down
+	private JButton bt11, bt22, bt33, bt44, bt55; // 放在left
+	private JButton bt111, bt222, bt333, bt444, bt555; // 放在right
+	private JPanel panel_down;
+	private JPanel panel_left;
+	private JPanel panel_right;
+	Socket connectionSock;
+	DataOutputStream serverOutput;
+
+	public static void main(String[] args) throws UnknownHostException, IOException {
+
+		// TODO Auto-generated method stub
+		blood99 frame = new blood99();
+		frame.setVisible(true);
+		frame.setResizable(false);
+	}
+
+	public blood99() {
+
+		try {
+			connectionSock = new Socket("127.0.0.1", 8000);
+			serverOutput = new DataOutputStream(connectionSock.getOutputStream());
+//			serverOutput.writeBytes("1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		setSize(800, 600);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setLayout(null);
+		show_number = new JLabel(total_number_str);
+		show_number.setSize(50, 50);
+		show_number.setLocation(400, 0);
+
+		// 下面的按鈕
+		panel_down = new JPanel();
+		panel_down.setSize(200, 100);
+		panel_down.setLocation(200, 400);
+		bt1 = new JButton("A");
+		bt2 = new JButton("2");
+		bt3 = new JButton("3");
+		bt4 = new JButton("4");
+		bt5 = new JButton("5");
+		panel_down.add(bt1);
+		panel_down.add(bt2);
+		panel_down.add(bt3);
+		panel_down.add(bt4);
+		panel_down.add(bt5);
+		bt1.addActionListener(this);
+		bt2.addActionListener(this);
+		bt3.addActionListener(this);
+		bt4.addActionListener(this);
+		bt5.addActionListener(this);
+
+		// 左邊的按鈕
+		panel_left = new JPanel();
+		panel_left.setSize(200, 100);
+		panel_left.setLocation(0, 0);
+		bt11 = new JButton("6");
+		bt22 = new JButton("7");
+		bt33 = new JButton("8");
+		bt44 = new JButton("9");
+		bt55 = new JButton("10");
+		panel_down.add(bt11);
+		panel_down.add(bt22);
+		panel_down.add(bt33);
+		panel_down.add(bt44);
+		panel_down.add(bt55);
+		bt11.addActionListener(this);
+		bt22.addActionListener(this);
+		bt33.addActionListener(this);
+		bt44.addActionListener(this);
+		bt55.addActionListener(this);
+
+		// 右邊的按鈕
+		panel_right = new JPanel();
+		panel_right.setSize(200, 100);
+		panel_right.setLocation(600, 0);
+		bt111 = new JButton("J");
+		bt222 = new JButton("Q");
+		bt333 = new JButton("K");
+		bt444 = new JButton("8");
+		bt555 = new JButton("7");
+		panel_down.add(bt111);
+		panel_down.add(bt222);
+		panel_down.add(bt333);
+		panel_down.add(bt444);
+		panel_down.add(bt555);
+		bt111.addActionListener(this);
+		bt222.addActionListener(this);
+		bt333.addActionListener(this);
+		bt444.addActionListener(this);
+		bt555.addActionListener(this);
+
+		// Add ActionListener with {YOURBUTTONNAME}.addActionListener(this)
+
+		this.add(panel_down);
+		this.add(panel_left);
+		this.add(panel_right);
+		this.add(show_number);
+		
+
+	}
+
+	public void function_A() {
+		try {
+			serverOutput.writeBytes("1\n");
+			show_number.setText(""+main.toatal);// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_2() {
+		try {
+			serverOutput.writeBytes("2\n");
+			show_number.setText("2");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_3() {
+		try {
+			serverOutput.writeBytes("3\n");
+			show_number.setText("3");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_4() {
+		try {
+			serverOutput.writeBytes("4\n");
+			show_number.setText("4");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_5() {
+		try {
+			serverOutput.writeBytes("5\n");
+			show_number.setText("5");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_6() {
+		try {
+			serverOutput.writeBytes("6\n");
+			show_number.setText("6");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_7() {
+		try {
+			serverOutput.writeBytes("7\n");
+			show_number.setText("7");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_8() {
+		try {
+			serverOutput.writeBytes("8\n");
+			show_number.setText("8");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_9() {
+		try {
+			serverOutput.writeBytes("9\n");
+			show_number.setText("9");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_10() {
+		try {
+			serverOutput.writeBytes("10\n");
+			show_number.setText("10");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_J() {
+		try {
+			serverOutput.writeBytes("11\n");
+			show_number.setText("11");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_Q() {
+		try {
+			serverOutput.writeBytes("12\n");
+			show_number.setText("12");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void function_K() {
+		try {
+			serverOutput.writeBytes("13\n");
+			show_number.setText("13");// 印在顯示器上
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// 判斷出的牌是什麼
+	public void actionPerformed(ActionEvent e) {
+		if (e.getActionCommand().equals("A")) {
+			function_A();
+		} else if (e.getActionCommand().equals("2")) {
+			function_2();
+		} else if (e.getActionCommand().equals("3")) {
+			function_3();
+		} else if (e.getActionCommand().equals("4")) {
+			function_4();
+		} else if (e.getActionCommand().equals("5")) {
+			function_5();
+		} else if (e.getActionCommand().equals("6")) {
+			function_6();
+		} else if (e.getActionCommand().equals("7")) {
+			function_7();
+		} else if (e.getActionCommand().equals("8")) {
+			function_8();
+		} else if (e.getActionCommand().equals("9")) {
+			function_9();
+		} else if (e.getActionCommand().equals("10")) {
+			function_10();
+		} else if (e.getActionCommand().equals("J")) {
+			function_J();
+		} else if (e.getActionCommand().equals("Q")) {
+			function_Q();
+		} else if (e.getActionCommand().equals("K")) {
+			function_K();
+		}
+
+		// implement button listener
+	}
+
+}

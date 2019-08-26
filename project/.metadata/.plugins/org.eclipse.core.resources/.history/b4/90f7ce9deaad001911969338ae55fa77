@@ -1,0 +1,68 @@
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.Socket;
+import java.util.Scanner;
+
+public class Client {
+
+	public static void main(String[] args) {
+		Socket connectionSock;// ³s½u
+		PrintStream serverOutput;
+		
+		try {
+			connectionSock = new Socket("127.0.0.1", 8080);
+			serverOutput = new PrintStream(connectionSock.getOutputStream(), true);
+			InputThread inputThread = new InputThread(serverOutput);
+			inputThread.start();
+			while(true) {
+				
+				
+				
+				BufferedReader receiveBroadcastMsg = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
+				String waitBroadcastMsg = receiveBroadcastMsg.readLine();
+				System.out.println(waitBroadcastMsg);
+			}
+//			serverOutput.writeBytes("1");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+}
+
+class InputThread extends Thread {
+	String str;
+	PrintStream serverOutput;
+	
+	public InputThread(PrintStream serverOutput) {
+		this.serverOutput = serverOutput;
+	}
+	
+	public void run() {
+		Scanner scanner = new Scanner(System.in);
+		str = scanner.nextLine();
+		serverOutput.println(str);
+	}
+}
+
+//class OutputThread extends Thread {
+//	BufferedReader receiveBroadcastMsg;
+//	Socket connectionSock;
+//	public OutputThread(Socket connectionSock) {
+//		connectionSock = connectionSock;
+//	}
+//	public void run() {
+//		try {
+//			receiveBroadcastMsg = new BufferedReader(new InputStreamReader(connectionSock.getInputStream()));
+//			String waitBroadcastMsg = receiveBroadcastMsg.readLine();
+//			System.out.println(waitBroadcastMsg);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+//}
